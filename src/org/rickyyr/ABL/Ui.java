@@ -7,7 +7,6 @@ public class Ui {
   private Scanner scanner;
   private Balancer balancer;
 
-
   public Ui() {
     this.scanner = new Scanner(System.in);
     this.balancer = new Balancer();
@@ -19,8 +18,9 @@ public class Ui {
       System.out.println(this.balancer.listsToStringNoNumbers() + "\n[1] Put in list " +
         "\n[2] Remove from list " +
         "\n[3] Balance lists" +
-        "\n[4] Toggle Balance Mode (" + this.balancer.getBalanceMode() + ") " +
-        "\n[5] EXIT");
+        "\n[4] Toggle Balance Mode (" + this.balancer.getBalanceMode() + ")" +
+        "\n[5] Set max difference (" + this.balancer.getMaxDifference() + ")" +
+        "\n[6] EXIT");
       String usrInput = scanner.nextLine();
       if(usrInput.equals("1")) {
         this.putInListMode();
@@ -31,6 +31,8 @@ public class Ui {
       } else if(usrInput.equals("4")) {
           this.balancer.toggleBalanceMode();
       } else if(usrInput.equals("5")) {
+          this.setMaxDifferenceMode();
+      } else if(usrInput.equals("6")) {
           break;
       } else {this.printSelectionError();}
     }
@@ -75,6 +77,24 @@ public class Ui {
       if(this.balancer.getBalanceMode()) {
         this.balancer.balanceLists();
       }
+    }
+  }
+
+  private void setMaxDifferenceMode() {
+    try {
+      System.out.print("New max difference: ");
+      String input = this.scanner.nextLine();
+      int newMaxDifference = Integer.parseInt(input);
+      if(newMaxDifference >= 1) {
+        this.balancer.setMaxDifference(newMaxDifference);
+        this.balancer.balanceLists();
+      } else {
+        System.out.println("Please input a positive number >= 1");
+        this.setMaxDifferenceMode();
+      }
+    } catch(NumberFormatException e){
+      System.out.println("ERROR, please input a number");
+      this.setMaxDifferenceMode();
     }
   }
 

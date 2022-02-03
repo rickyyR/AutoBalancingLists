@@ -6,6 +6,7 @@ public class Balancer {
 
   private ArrayList<List> listHolder;
   private Boolean balanceMode;
+  private int maxDifference;
 
   public Balancer() {
     this.listHolder = new ArrayList<>();
@@ -13,6 +14,7 @@ public class Balancer {
     this.listHolder.add(new List());
     this.listHolder.add(new List());
     this.balanceMode = false;
+    this.maxDifference = 1;
   }
 
   public String listsToString() {
@@ -53,7 +55,7 @@ public class Balancer {
         }
       }
       sizeDifference = biggestList.getList().size() - smallestList.getList().size();
-      if(sizeDifference <= 1) {
+      if(sizeDifference <= maxDifference) {
         break;
       } else {
         biggestList.transferOneToList(smallestList.getList());
@@ -63,5 +65,13 @@ public class Balancer {
 
   public List getList(int index) {
     return this.listHolder.get(index);
+  }
+
+  public void setMaxDifference(int maxDifference) {
+    this.maxDifference = maxDifference;
+  }
+
+  public int getMaxDifference() {
+    return this.maxDifference;
   }
 }

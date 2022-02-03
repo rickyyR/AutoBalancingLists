@@ -15,7 +15,9 @@ public class List {
   }
 
   public void removeFromList() {
-    this.list.remove(this.list.size() - 1);
+    if(list.size() > 0) {
+      this.list.remove(this.list.size() - 1);
+    }
   }
 
   public void transferOneToList(ArrayList<Integer> targetList) {
